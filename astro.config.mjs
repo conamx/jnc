@@ -6,6 +6,6 @@ export default defineConfig({
   adapter: netlify(),
   site: 'https://shareinfo.co.kr',
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
   },
 });
