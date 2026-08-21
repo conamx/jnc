@@ -7,8 +7,6 @@ const recentPosts = (await getCollection('blog', ({data}) => data.status === 'pu
   .slice(0, 3);
 
 const catLabel: Record<string,string> = { seo:'SEO', adsense:'애드센스', content:'콘텐츠 마케팅', trend:'트렌드', tip:'마케팅 팁', case:'업종별 사례' };
-const bgColors: Record<string,string> = { seo:'linear-gradient(135deg,#e8f0ff,#c5d5ff)', adsense:'linear-gradient(135deg,#fff0eb,#ffd5c5)', content:'linear-gradient(135deg,#e3f5ef,#b8e8d8)', trend:'linear-gradient(135deg,#fff8ec,#ffe4a0)', tip:'linear-gradient(135deg,#f0e8ff,#d5b8ff)', case:'linear-gradient(135deg,#fff8e1,#ffe082)' };
-const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍️', trend:'🤖', tip:'💡', case:'⚖️' };
 ---
 <BaseLayout title="JNC마케팅 — 소상공인 & 전문직 마케팅 파트너" description="JNC마케팅은 법률사무소, 학원 등 소상공인 & 전문직 특화 마케팅 대행사입니다. 2013년부터 키워드·블로그·광고 마케팅으로 매출을 높여드립니다.">
 <style>
@@ -20,27 +18,20 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
   .hero h1 strong { color: var(--primary); }
   .hero-desc { font-size: 17px; color: var(--gray-600); max-width: 460px; line-height: 1.75; margin-bottom: 36px; }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 100px; font-size: 15px; font-weight: 700; box-shadow: 0 4px 20px rgba(0,82,204,0.3); transition: transform 0.15s, box-shadow 0.2s; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,82,204,0.4); }
-  .btn-outline { display: inline-flex; align-items: center; gap: 8px; background: white; color: var(--black); padding: 15px 30px; border-radius: 100px; font-size: 15px; font-weight: 600; border: 1.5px solid var(--gray-200); transition: border-color 0.2s, transform 0.15s; }
-  .btn-outline:hover { border-color: var(--black); transform: translateY(-2px); }
-  .hero-trust { display: flex; align-items: center; gap: 12px; margin-top: 28px; font-size: 13px; color: var(--gray-400); }
-  .trust-avatars { display: flex; }
-  .trust-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; margin-left: -8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--gray-100); }
-  .trust-avatar:first-child { margin-left: 0; }
+  .hero-trust { display: flex; align-items: center; gap: 10px; margin-top: 28px; font-size: 13px; color: var(--gray-400); }
+  .hero-trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); flex-shrink: 0; }
 
   /* METRICS */
   .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .metric-card { background: white; border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); transition: transform 0.2s; animation: fadeUp 0.6s ease both; }
+  .metric-card { background: white; border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow); transition: transform 0.2s; animation: fadeUp 0.6s ease both; }
   .metric-card:hover { transform: translateY(-3px); }
   .metric-card:nth-child(1){animation-delay:0.1s} .metric-card:nth-child(2){animation-delay:0.2s} .metric-card:nth-child(3){animation-delay:0.3s} .metric-card:nth-child(4){animation-delay:0.4s}
   .metric-card.accent { background: var(--primary); color: white; grid-column: span 2; }
-  .metric-icon { font-size: 26px; margin-bottom: 10px; }
-  .metric-num { font-family: var(--font-serif); font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
-  .metric-label { font-size: 12px; color: var(--gray-400); }
+  .metric-num { font-family: var(--font-serif); font-size: 30px; font-weight: 700; line-height: 1.3; margin-bottom: 6px; }
+  .metric-label { font-size: 12px; color: var(--gray-400); letter-spacing: 0.01em; }
   .metric-card.accent .metric-label { color: rgba(255,255,255,0.65); }
-  .metric-card.accent .metric-num { color: white; }
-  .metric-desc { font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 6px; line-height: 1.5; }
+  .metric-card.accent .metric-num { color: white; font-size: 18px; margin-bottom: 8px; }
+  .metric-desc { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.5; }
 
   /* CLIENTS */
   .clients-wrap { background: var(--black); padding: 28px 5%; overflow: hidden; }
@@ -78,7 +69,7 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
   .timeline-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
   .about-right { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
   .about-value-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); padding: 24px 28px; }
-  .about-value-icon { font-size: 24px; margin-bottom: 10px; }
+  .about-value-num { font-family: var(--font-serif); font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
   .about-value-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
   .about-value-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.65; }
 
@@ -92,31 +83,17 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
   .blog-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 20px; }
   .blog-card { background: var(--bg); border-radius: var(--radius); overflow: hidden; transition: transform 0.22s, box-shadow 0.22s; display: block; }
   .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-  .blog-thumb { width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 48px; }
-  .blog-thumb-lg { aspect-ratio: 4/3; font-size: 72px; }
+  .blog-thumb { width: 100%; aspect-ratio: 16/9; background: var(--primary-light); display: flex; align-items: center; justify-content: center; }
+  .blog-thumb-lg { aspect-ratio: 4/3; }
+  .blog-thumb-mark { font-family: var(--font-serif); font-size: 30px; font-weight: 700; color: var(--primary); opacity: 0.35; }
+  .blog-thumb-lg .blog-thumb-mark { font-size: 44px; }
   .blog-body { padding: 20px; }
   .blog-title { font-size: 15px; font-weight: 700; line-height: 1.45; margin-bottom: 8px; }
   .blog-title-lg { font-size: 19px; }
   .blog-excerpt { font-size: 13px; color: var(--gray-600); line-height: 1.65; margin-bottom: 14px; }
   .blog-meta { font-size: 12px; color: var(--gray-400); display: flex; gap: 8px; }
 
-  /* CTA */
-  .cta-wrap { padding: 80px 5%; }
-  .cta-inner { max-width: 1280px; margin: 0 auto; background: var(--primary); border-radius: 20px; padding: 64px 72px; display: grid; grid-template-columns: 1fr 420px; align-items: center; gap: 64px; position: relative; overflow: hidden; }
-  .cta-inner::after { content:'📊'; position:absolute; font-size:200px; right:460px; top:-30px; opacity:0.07; pointer-events:none; }
-  .cta-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
-  .cta-title { font-family: var(--font-serif); font-size: clamp(28px,3vw,40px); color: white; line-height: 1.3; margin-bottom: 16px; }
-  .cta-desc { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.75; }
-  .form-card { background: white; border-radius: 16px; padding: 32px 28px; box-shadow: 0 16px 56px rgba(0,0,0,0.25); }
-  .form-card-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-  .form-card-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 20px; }
-  .f-label { font-size: 13px; font-weight: 600; color: var(--gray-600); display: block; margin-bottom: 5px; }
-  .f-input, .f-textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--gray-200); border-radius: 8px; font-size: 14px; font-family: var(--font-sans); outline: none; background: var(--bg); margin-bottom: 12px; transition: border-color 0.2s; }
-  .f-input:focus, .f-textarea:focus { border-color: var(--primary); background: white; }
-  .f-textarea { resize: vertical; min-height: 90px; }
-  .f-btn { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: var(--font-sans); transition: background 0.2s; }
-  .f-btn:hover { background: #0040a0; }
-  .f-note { font-size: 11px; color: var(--gray-400); text-align: center; margin-top: 8px; }
+
 
   /* MOBILE */
   .hero-left > * { animation: fadeUp 0.55s ease both; }
@@ -130,8 +107,6 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
     .services-grid { grid-template-columns: 1fr 1fr; }
     .blog-grid { grid-template-columns: 1fr 1fr; }
     .blog-card:first-child { grid-column: span 2; }
-    .cta-inner { grid-template-columns: 1fr; padding: 48px 40px; }
-    .cta-inner::after { display: none; }
   }
   @media (max-width: 768px) {
     .hero { padding: 52px 20px 48px; }
@@ -141,9 +116,6 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
     .about-wrap { padding: 60px 20px; }
     .blog-wrap { padding: 60px 0; }
     .blog-inner { padding: 0 20px; }
-    .cta-wrap { padding: 48px 20px; }
-    .cta-inner { padding: 40px 28px; border-radius: 16px; }
-    .cta-title { font-size: 26px; }
     .section-wrap { padding: 60px 20px; }
     .clients-wrap { padding: 24px 20px; }
   }
@@ -161,19 +133,17 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
         <a class="btn-outline" href="/services/">서비스 보기</a>
       </div>
       <div class="hero-trust">
-        <div class="trust-avatars">
-          <div class="trust-avatar">😊</div><div class="trust-avatar">🙂</div><div class="trust-avatar">😄</div><div class="trust-avatar">😎</div>
-        </div>
-        <span>법률·학원·소상공인 <strong style="color:var(--black)">전문직 특화</strong> 마케팅</span>
+        <span class="hero-trust-dot"></span>
+        <span>2013년부터 · 법률·학원·소상공인 <strong style="color:var(--black)">전문직 특화</strong> 마케팅</span>
       </div>
     </div>
     <div class="hero-right">
       <div class="metrics-grid">
-        <div class="metric-card"><div class="metric-icon">📅</div><div class="metric-num" style="font-size:20px;line-height:1.4;">2013<span style="font-size:16px">년</span></div><div class="metric-label">설립 · 업력 13년</div></div>
-        <div class="metric-card"><div class="metric-icon">⚖️</div><div class="metric-num" style="font-size:20px;line-height:1.4;">법률 · 학원<br>소상공인 특화</div><div class="metric-label">전문직 마케팅 전문</div></div>
-        <div class="metric-card"><div class="metric-icon">🔍</div><div class="metric-num" style="font-size:20px;line-height:1.4;">키워드 ·<br>블로그</div><div class="metric-label">매출 직결 마케팅</div></div>
-        <div class="metric-card"><div class="metric-icon">🤝</div><div class="metric-num" style="font-size:18px;line-height:1.4;">비용에<br>책임</div><div class="metric-label">고객 비용 지출 책임제</div></div>
-        <div class="metric-card accent"><div class="metric-icon">💡</div><div class="metric-num">지금 무료 진단 중</div><div class="metric-desc">우리 회사 마케팅, 어디서부터 시작해야 할지 모르겠다면? 30분 무료 컨설팅을 받아보세요.</div></div>
+        <div class="metric-card"><div class="metric-num">2013<span style="font-size:16px">년</span></div><div class="metric-label">설립 · 업력 13년</div></div>
+        <div class="metric-card"><div class="metric-num">법률 · 학원<br>소상공인 특화</div><div class="metric-label">전문직 마케팅 전문</div></div>
+        <div class="metric-card"><div class="metric-num">키워드 ·<br>블로그</div><div class="metric-label">매출 직결 마케팅</div></div>
+        <div class="metric-card"><div class="metric-num">비용에<br>책임</div><div class="metric-label">고객 비용 지출 책임제</div></div>
+        <div class="metric-card accent"><div class="metric-num">지금 무료 진단 중</div><div class="metric-desc">우리 회사 마케팅, 어디서부터 시작해야 할지 모르겠다면? 30분 무료 컨설팅을 받아보세요.</div></div>
       </div>
     </div>
   </div>
@@ -237,9 +207,9 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
         </div>
       </div>
       <div class="about-right">
-        {[['⚖️','업종을 이해하는 마케팅','법률사무소, 학원, 소상공인 등 각 업종은 고객 심리와 검색 패턴이 다릅니다. 업종별 특성을 깊이 이해한 전략으로 접근합니다.'],['🤝','비용 지출에 책임을 다합니다','소상공인에게 마케팅 예산은 소중합니다. 동반성장을 목표로 고객의 비용 지출 한 푼 한 푼에 책임감을 갖고 일합니다.'],['📅','2013년부터 쌓아온 실전 노하우','13년간 법률, 교육, 소상공인 분야에서 직접 쌓은 실전 경험이 전략의 기반입니다.']].map(([icon,title,desc]) => (
+        {[['01','업종을 이해하는 마케팅','법률사무소, 학원, 소상공인 등 각 업종은 고객 심리와 검색 패턴이 다릅니다. 업종별 특성을 깊이 이해한 전략으로 접근합니다.'],['02','비용 지출에 책임을 다합니다','소상공인에게 마케팅 예산은 소중합니다. 동반성장을 목표로 고객의 비용 지출 한 푼 한 푼에 책임감을 갖고 일합니다.'],['03','2013년부터 쌓아온 실전 노하우','13년간 법률, 교육, 소상공인 분야에서 직접 쌓은 실전 경험이 전략의 기반입니다.']].map(([num,title,desc]) => (
           <div class="about-value-card">
-            <div class="about-value-icon">{icon}</div>
+            <div class="about-value-num">{num}</div>
             <div class="about-value-title">{title}</div>
             <div class="about-value-desc">{desc}</div>
           </div>
@@ -264,7 +234,7 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
         <div style="grid-column:span 3;text-align:center;padding:48px;color:var(--gray-400)">아직 발행된 글이 없습니다</div>
       ) : recentPosts.map((post, i) => (
         <a class="blog-card" href={`/blog/${post.slug}/`}>
-          <div class={`blog-thumb${i===0?' blog-thumb-lg':''}`} style={`background:${bgColors[post.data.category]||bgColors.seo}`}>{emojis[post.data.category]||'📝'}</div>
+          <div class={`blog-thumb${i===0?' blog-thumb-lg':''}`}><span class="blog-thumb-mark">JNC</span></div>
           <div class="blog-body">
             <span class="blog-tag tag-blue">{catLabel[post.data.category]||post.data.category}</span>
             <div class={`blog-title${i===0?' blog-title-lg':''}`}>{post.data.title}</div>
@@ -284,10 +254,10 @@ const emojis: Record<string,string> = { seo:'🔍', adsense:'💰', content:'✍
       <div class="cta-label">무료 상담</div>
       <div class="cta-title">우리 회사 마케팅,<br>어디서부터 시작해야 할까요?</div>
       <p class="cta-desc">30분 무료 컨설팅으로 현재 문제점과 우선순위를 짚어드립니다.</p>
-      <div style="margin-top:28px;display:flex;flex-direction:column;gap:10px">
-        <div style="color:rgba(255,255,255,0.65);font-size:14px">✅ 30분 무료 상담</div>
-        <div style="color:rgba(255,255,255,0.65);font-size:14px">✅ 법률·학원·소상공인 업종 특화</div>
-        <div style="color:rgba(255,255,255,0.65);font-size:14px">✅ 2013년부터 13년 실전 노하우</div>
+      <div class="cta-checklist">
+        <div class="cta-check">30분 무료 상담</div>
+        <div class="cta-check">법률·학원·소상공인 업종 특화</div>
+        <div class="cta-check">2013년부터 13년 실전 노하우</div>
       </div>
     </div>
     <div class="form-card">
